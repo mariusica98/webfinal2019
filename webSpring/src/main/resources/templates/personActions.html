@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{/css/override.css}"
+	href="../../static/css//override.css" />
+<head></head>
+
+<body>
+
+	<form th:object="${personViewModelPerson}" action="insert.html"
+		th:action="@{/person}" method="post">
+		<div>
+			<input class="btn btn-primary" name="submit" type="submit"
+				value="Download" />
+
+		</div>
+		<br>
+		<div>
+			<div>
+				<b> <label>Insert Person Name:</label></b> <input type="text"
+					th:field="*{name}" />
+			</div>
+			<br>
+			<p>
+				<input class="btn btn-primary" name="submit" type="submit"
+					value="Search" /> <input class="btn btn-primary" name="submit"
+					type="submit" value="Reset" /> <input class="btn btn-primary"
+					name="submit" type="submit" value="Entity" />
+			</p>
+		</div>
+
+		<div th:if="${not personViewModelPerson.isListEmpty()}">
+			<table class="table table-hover" border="3">
+				<thead class="thead-dark">
+					<tr>
+						<th scope="col">NAME</th>
+						<th scope="col">STREET_ADDRESS</th>
+						<th scope="col">CITY</th>
+						<th scope="col">STATE</th>
+						<th scope="col">COUNTRY</th>
+						<th scope="col">POSTAL_CODE</th>
+						<th scope="col">EFFECTIVE_DATE</th>
+						<th scope="col">EXPIRATION_DATE</th>
+						<th scope="col">STANDARD_ORDER</th>
+						<th scope="col">LAST_UPDATE</th>
+						<th scope="col">ACTION</th>
+						<th scope="col">FR_CITATION</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr data-th-each="person : *{searchedList}">
+						<td data-th-text="${person.name}">...</td>
+						<td data-th-text="${person.streetAddress}">...</td>
+						<td data-th-text="${person.city}">...</td>
+						<td data-th-text="${person.state}">...</td>
+						<td data-th-text="${person.country}">...</td>
+						<td data-th-text="${person.postalCode}">...</td>
+						<td data-th-text="${person.effectiveDate}">...</td>
+						<td data-th-text="${person.expirationDate}">...</td>
+						<td data-th-text="${person.standardOrder}">...</td>
+						<td data-th-text="${person.lastUpdate}">...</td>
+						<td data-th-text="${person.action}">...</td>
+						<td data-th-text="${person.frCitation}">...</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<div th:if="${not personViewModelPerson.isMaliciousEmpty()}">
+			<p>
+				<b>This search offer also some unformatted information</b>
+			</p>
+
+			<table border="3">
+				<tr data-th-each="person : *{maliciousList}">
+					<td data-th-text="${person.line}">...</td>
+				</tr>
+			</table>
+		</div>
+
+		<div
+			th:if="${personViewModelPerson.isListEmpty()} and ${personViewModelPerson.isMaliciousEmpty()} and ${not personViewModelPerson.isNameEmpty()}">
+			<p>No information found on: https://www.bis.doc.gov/dpl/dpl.txt</p>
+		</div>
+
+		<label th:text="${mesaj}"></label>
+
+		<div
+			th:if="${not personViewModelPerson.isListEmpty()} or ${not personViewModelPerson.isMaliciousEmpty()}">
+			<p>
+				<br> <input class="btn btn-primary" name="submit" type="submit"
+					value="Export" th:action="@{/download1}" />
+			</p>
+		</div>
+	</form>
+</body>
+<th:block th:include="layout/bootstrapIncludes.html"></th:block>
+</html>

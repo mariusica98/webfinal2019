@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" th:href="@{/css/cssTemplate.css}"
+	href="../../static/css/cssTemplate.css" />
+</head>
+<body>
+	<div class="col-1">
+		<th:block th:include="layout/navBarTemplate.html"></th:block>
+	</div>
+	<div class="col-2">
+		<div>
+			<th:block th:include="layout/headerTemplate.html"></th:block>
+		</div>
+		<main class="content">
+				<article>
+					<th:block th:include="personActions.html"></th:block>
+				</article>
+		</main>
+	</div>
+</body>
+</html>

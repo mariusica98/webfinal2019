@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" th:href="@{/css/override.css}"
+	href="../../static/css//override.css" />
+
+<head></head>
+
+<body>
+
+	<form th:object="${pdfViewModel}" action="insert.html" th:action="@{/}"
+		method="post">
+		<div>
+			<input class="btn btn-primary" name="submit" type="submit"
+				value="Download" />
+		</div>
+		<br>
+		<div>
+			<div>
+				<b><label for="personName" >Insert Entity Name:</label></b> <input
+					type="text" name="searchedWord" />
+			</div>
+			<br>
+			<p>
+				<input class="btn btn-primary" name="submit" type="submit"
+					value="Search" oninput="saveWord(this.value)" /> <input
+					class="btn btn-primary" name="submit" type="submit" value="Reset" />
+				<!-- 				<input class = "btn btn-primary" name="submit" type="submit" value="Export" /> -->
+				<input class="btn btn-primary" name="submit" type="submit"
+					value="Person" />
+			</p>
+		</div>
+
+		<div th:if="${mesaj1 == 'No entity found' }">
+			<p>No information found on: entity.pdf</p>
+		</div>
+		<div th:if="${mesaj1 == 'entity found' }">
+			<div>
+				<h5 th:text="'Information about : ' + ${SearchedWord}"></h5>
+				<table class="table" border="2">
+					<tr>
+						<th class="tb" scope="col">ENTITY</th>
+					</tr>
+					<tr th:each="result : *{results}">
+						<td>
+							<h5 id="id1" th:text="${result}"></h5>
+						</td>
+					</tr>
+				</table>
+				<input class="btn btn-primary" name="submit" type="submit"
+					value="Export" />
+			</div>
+		</div>
+	</form>
+</body>
+<script src="scripts/java.js"></script>
+<th:block th:include="layout/bootstrapIncludes.html"></th:block>
+</html>
