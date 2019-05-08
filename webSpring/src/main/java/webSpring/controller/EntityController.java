@@ -93,7 +93,7 @@ public class EntityController {
 		case "Person":
 			return "redirect:/person";
 
-		case "Dowland":
+		case "Download":
 			String text = this.getText();
 			pdfRepository.save(new PDF(text));
 			return "entity";
