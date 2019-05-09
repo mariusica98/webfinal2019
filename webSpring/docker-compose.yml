@@ -10,8 +10,8 @@ services:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=dinerapp
       
-  spring-boot-jpa-docker-springweb:
-    image: springweb-img:latest
+  spring-boot-jpa-docker-webspring:
+    image: webspring-img:latest
     depends_on:
       - springweb-mysql
     ports:
