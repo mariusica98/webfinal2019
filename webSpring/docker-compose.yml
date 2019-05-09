@@ -1,22 +1,20 @@
 version: '3'
-
 services:
-   springweb-mysql:
+  webspring-mysql:
     image: custom-mysql-img:latest
-    container_name: dinerapp-prod
+    container_name: webspring-prod
     ports:
-      - 3307:3306
+    - 3307:3306
     environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=dinerapp
-      
-   webspring:
+    - MYSQL_ROOT_PASSWORD=root
+    - MYSQL_DATABASE=dinerapp
+  webspring:
     image: webspring-img:latest
     depends_on:
-      - springweb-mysql
+    - webspring-mysql
     ports:
-      - 5554:8080
+    - 5554:8080
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://docker-mysql/webSpring?verifyServerCertificate=false&useSSL=true
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=root
+    - SPRING_DATASOURCE_URL=jdbc:mysql://docker-mysql/webSpring?verifyServerCertificate=false&useSSL=true
+    - SPRING_DATASOURCE_USERNAME=root
+    - SPRING_DATASOURCE_PASSWORD=root
