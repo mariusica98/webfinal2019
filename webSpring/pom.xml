@@ -104,8 +104,11 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<finalName>webSpring</finalName>
+				</configuration>
 			</plugin>
-	
+
 			<plugin>
 				<groupId>com.spotify</groupId>
 				<artifactId>dockerfile-maven-plugin</artifactId>
@@ -120,8 +123,9 @@
 				</executions>
 				<configuration>
 					<repository>webSpring-img</repository>
+					<pullNewerImage>false</pullNewerImage>
 				</configuration>
-			</plugin> 
+			</plugin>
 		</plugins>
 	</build>
 

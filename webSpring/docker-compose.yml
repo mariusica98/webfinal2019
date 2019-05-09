@@ -1,16 +1,8 @@
 version: '3'
 
 services: 
-  docker-mysql:
-    image: custom-mysql-img:latest
-    container_name: webSpring-prod
-    ports:
-      - 3307:3306
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=webSpring
   spring-boot-jpa-docker-webapp:
-    image: dinerapp-img:latest
+    image: webSpring-img:latest
     depends_on:
       - docker-mysql
     ports:
