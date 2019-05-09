@@ -3,14 +3,14 @@ version: '3'
 services:
   springweb-mysql: 
     image: custom-mysql-img:latest
-    container_name: w-prod
+    container_name: webspring-prod
     ports:
       - 3313:3306
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=dinerapp
       
-  spring-boot-jpa-docker-webspring:
+  webspring:
     image: webspring-img:latest
     depends_on:
       - springweb-mysql
