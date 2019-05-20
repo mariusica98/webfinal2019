@@ -1,0 +1,16 @@
+webSpring\model\PersonViewModel.class
+webSpring\SpringBootWebApplication.class
+webSpring\entity\PDF.class
+webSpring\controller\EntityController.class
+META-INF\CompilerHints
+webSpring\repository\MaliciousRepository.class
+webSpring\HeaderFooterPageEvent.class
+webSpring\model\PersonViewModelPerson.class
+webSpring\entity\Person.class
+webSpring\model\PdfViewModel.class
+webSpring\utils\IOActions.class
+webSpring\entity\Malicious.class
+webSpring\controller\PersonController.class
+META-INF\BenchmarkList
+webSpring\repository\PDFRepository.class
+webSpring\repository\PersonRepository.class

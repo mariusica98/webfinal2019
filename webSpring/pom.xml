@@ -122,8 +122,8 @@
 					</execution>
 				</executions>
 				<configuration>
-					<repository>webspring-img</repository>
-					<pullNewerImage>false</pullNewerImage>
+					<repository>webspring</repository>
+					<!-- <pullNewerImage>false</pullNewerImage> -->
 				</configuration>
 			</plugin>
 		</plugins>
