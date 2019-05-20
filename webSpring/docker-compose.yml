@@ -1,46 +1,31 @@
 version: '3'
 services:
-#  webspring-mysql:
-#    image: custom-mysql-img:latest
-#    container_name: dinerapp-prod
-#    ports:
-#      - 3317:3306
-#    environment:
-#      - MYSQL_ROOT_PASSWORD=root
-#      - MYSQL_DATABASE=dinerapp
+  webspring-mysql:
+    image: custom-mysql-img:latest
+    container_name: dinerapp-prod
+    ports:
+     - 3317:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=dinerapp
 
 
   webspring-mysql:
     container_name: custom-webspring-mysql
     image: mysql:8.0
-        environment:
+    environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_ROOT_HOST=%
       - MYSQL_DATABASE=webSpring
-      - MYSQL_USER=root
-      - MYSQL_PASSWORD=root
-    networks:
-      vpcbr:
-        ipv4_address: 10.5.0.5
-    ports:
-      - "3306"
+      - MYSQL_USER=test
+      - MYSQL_PASSWORD=test
   webspring:
     image: webspring:latest
-#    depends_on:
-#    - webspring-mysql
+    depends_on:
+    - webspring-mysql
     ports:
     - 5554:8080
     environment:
     - SPRING_DATASOURCE_URL=jdbc:mysql://dinerapp/webSpring?verifyServerCertificate=false&useSSL=true
     - SPRING_DATASOURCE_USERNAME=root
     - SPRING_DATASOURCE_PASSWORD=root
-    networks:
-      vpcbr:
-        ipv4_address: 10.5.0.7
-        
-networks:
-  vpcbr:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 10.5.0.0/16    
