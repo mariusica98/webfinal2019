@@ -1,20 +1,20 @@
 version: '3'
 services:
   webspring-mysql:
-    image: webspring-mysql:latest
-    container_name: webspring-mysql
+    image: custom-mysql-img:latest
+    container_name: dinerapp-prod
     ports:
-    - 3317:3306
+      - 3317:3306
     environment:
-    - MYSQL_ROOT_PASSWORD=root
-    - MYSQL_DATABASE=dinerapp
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=dinerapp
   webspring:
     image: webspring:latest
     depends_on:
     - webspring-mysql
     ports:
-    - 5553:8080
+    - 5554:8080
     environment:
-    - SPRING_DATASOURCE_URL=jdbc:mysql://webspring-mysql/webSpring?verifyServerCertificate=false&useSSL=true
+    - SPRING_DATASOURCE_URL=jdbc:mysql://dinerapp/webSpring?verifyServerCertificate=false&useSSL=true
     - SPRING_DATASOURCE_USERNAME=root
     - SPRING_DATASOURCE_PASSWORD=root
