@@ -1,17 +1,17 @@
 version: '3'
 services:
-  webspring-mysql:
-    image: custom-mysql-img:latest
-    container_name: custom-mysql-img
-    ports:
-      - 3317:3306
-    environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=dinerapp
+#  webspring-mysql:
+#    image: custom-mysql-img:latest
+#    container_name: dinerapp-prod
+#    ports:
+#      - 3317:3306
+#    environment:
+#      - MYSQL_ROOT_PASSWORD=root
+#      - MYSQL_DATABASE=dinerapp
   webspring:
     image: webspring:latest
-    depends_on:
-    - webspring-mysql
+#    depends_on:
+#    - webspring-mysql
     ports:
     - 5554:8080
     environment:
