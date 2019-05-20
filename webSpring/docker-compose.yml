@@ -1,7 +1,7 @@
 version: '3'
 services:
   webspring-mysql:
-    image: mysql:8.0
+    image: custom-mysql-img:latest
     container_name: custom-mysql-img
     ports:
       - 3317:3306
