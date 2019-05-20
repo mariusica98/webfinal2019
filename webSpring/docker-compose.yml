@@ -27,5 +27,5 @@ services:
     - SPRING_DATASOURCE_PASSWORD=root
     
     networks:
-      app_net:
-        driver: "bridge"
+     app_net:
+      driver: "bridge"
