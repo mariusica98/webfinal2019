@@ -2,7 +2,7 @@ version: '3'
 services:
   webspring-mysql:
     image: webspring-mysql:latest
-    container_name: webspring-prod
+    container_name: webspring-mysql
     ports:
     - 3317:3306
     environment:
@@ -13,7 +13,7 @@ services:
     depends_on:
     - webspring-mysql
     ports:
-    - 5554:8080
+    - 5553:8080
     environment:
     - SPRING_DATASOURCE_URL=jdbc:mysql://webspring-mysql/webSpring?verifyServerCertificate=false&useSSL=true
     - SPRING_DATASOURCE_USERNAME=root
