@@ -105,7 +105,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<configuration>
-					<finalName>webspring-img</finalName>
+					<finalName>webspring</finalName>
 				</configuration>
 			</plugin>
 
