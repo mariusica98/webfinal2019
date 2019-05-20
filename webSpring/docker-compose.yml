@@ -2,7 +2,7 @@ version: '3'
 services:
   webspring-mysql:
     image: custom-mysql-img:latest
-    container_name: dinerapp-prod
+    container_name: webspring-mysql
     ports:
       - 3317:3306
     environment:
