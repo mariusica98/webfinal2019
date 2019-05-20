@@ -4,7 +4,7 @@ services:
     image: custom-mysql-img:latest
     container_name: webspring-prod
     ports:
-    - 3317:3306
+    - 3307:3306
     environment:
     - MYSQL_ROOT_PASSWORD=root
     - MYSQL_DATABASE=dinerapp
