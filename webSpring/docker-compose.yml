@@ -2,7 +2,7 @@ version: '3'
 services:
   webspring-mysql:
     image: custom-mysql-img:latest
-    container_name: webspring-prod
+#    container_name: webspring-prod
     ports:
      - 3317:3306
     environment:
