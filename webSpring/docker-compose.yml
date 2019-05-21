@@ -12,10 +12,10 @@ services:
   webspring:
     image: webspring:latest
     depends_on:
-    - webspring-mysql
+      - webspring-mysql
     ports:
-    - 5554:8080
+      - 5554:8080
     environment:
-    - SPRING_DATASOURCE_URL=jdbc:mysql://dinerapp/webSpring?verifyServerCertificate=false&useSSL=true
-    - SPRING_DATASOURCE_USERNAME=root
-    - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_DATASOURCE_URL=jdbc:mysql://dinerapp/webSpring?verifyServerCertificate=false&useSSL=true
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
