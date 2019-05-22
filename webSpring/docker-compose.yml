@@ -7,6 +7,6 @@ services:
     ports:
       - 5554:8080
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3307/webSpring?verifyServerCertificate=false&useSSL=true
+      - SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306/webSpring?verifyServerCertificate=false&useSSL=true
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root
