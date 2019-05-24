@@ -3,7 +3,7 @@ services:
   webspring:
     image: webspring:latest
     external_links:
-      - dinerapp-prod
+      - dinerapp-prod:webSpring
     ports:
       - 5554:8080
 #    environment:
