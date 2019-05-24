@@ -6,7 +6,9 @@ services:
       - dinerapp-prod
     ports:
       - 5554:8080
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://10.50.173.85:3307/webSpring?useSSL=false
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=root
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:mysql://10.50.173.85:3307/webSpring?useSSL=false
+#      - SPRING_DATASOURCE_USERNAME=root
+#      - SPRING_DATASOURCE_PASSWORD=root
+#      -
+      
