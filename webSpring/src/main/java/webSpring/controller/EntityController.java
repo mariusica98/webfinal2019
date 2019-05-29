@@ -75,7 +75,7 @@ public class EntityController {
 			} else
 				model.addAttribute("mesaj1", "entity found");
 
-			exportToPDF(searchedText, "output/txt.pdf", searchedWord);
+			exportToPDF(searchedText, "output.pdf", searchedWord);
 			return "entity";
 
 		case "Reset":
