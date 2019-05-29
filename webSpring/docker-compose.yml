@@ -12,6 +12,6 @@ services:
       - SPRING_DATASOURCE_PASSWORD=root
 networks:
   default:
-    external: true
-    name: dinerapp_bridge
+    external: 
+      name: dinerapp_bridge
     
