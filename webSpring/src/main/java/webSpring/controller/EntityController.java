@@ -161,6 +161,7 @@ public class EntityController {
 
 		try {
 			File f = new File("entity.pdf");
+			System.out.println(" fisierul exista ? : --- "+ f.exists() );
 			System.out.println("FILE PATH IS:  "+f.getAbsolutePath());
 			document = PDDocument.load(f);
 
@@ -172,6 +173,7 @@ public class EntityController {
 			}
 			document.close();
 		} catch (IOException e) {
+			e.printStackTrace();
 			e.getMessage();
 			System.out.println();
 			e.getCause();
