@@ -10,8 +10,8 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://10.50.173.85:3307/webSpring?useSSL=false
       - SPRING_DATASOURCE_USERNAME=root
       - SPRING_DATASOURCE_PASSWORD=root
-    networks:
-      default:
-        external: true
-        name: dinerapp_bridge
+networks:
+  default:
+    external: true
+    name: dinerapp_bridge
     
