@@ -90,7 +90,7 @@ public class PersonController {
 				}
 				personViewModelPerson.setMaliciousList(maliciousPersons);
 
-				exportToPDF(searchedPersons, maliciousPersons, "output/txt.pdf", searchedName);
+				exportToPDF(searchedPersons, maliciousPersons, "output.pdf", searchedName);
 			}
 			return "person";
 
@@ -105,7 +105,7 @@ public class PersonController {
 
 		case "Export":
 			try {
-				downloadFile(response, "output/txt.pdf");
+				downloadFile(response, "output.pdf");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

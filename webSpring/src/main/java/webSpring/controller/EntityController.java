@@ -84,7 +84,7 @@ public class EntityController {
 		case "Export":
 			try {
 
-				downloadFile(response, "output/txt.pdf");
+				downloadFile(response, "output.pdf");
 
 			} catch (IOException e) {
 				e.printStackTrace();
