@@ -161,7 +161,7 @@ public class EntityController {
 
 		try {
 			File f = new File("entity.pdf");
-			System.out.println("FILE PATH IS:  "+f.getPath());
+			System.out.println("FILE PATH IS:  "+f.getAbsolutePath());
 			document = PDDocument.load(f);
 
 			if (!document.isEncrypted()) {
@@ -172,8 +172,9 @@ public class EntityController {
 			}
 			document.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e.getMessage();
+			System.out.println();
+			e.getCause();
 		}
 
 		return text;
