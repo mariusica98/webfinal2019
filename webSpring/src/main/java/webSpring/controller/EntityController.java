@@ -160,7 +160,7 @@ public class EntityController {
 		PDDocument document;
 
 		try {
-			document = PDDocument.load(new File("src/main/resources/static/pdf/entity.pdf"));
+			document = PDDocument.load(new File("entity.pdf"));
 
 			if (!document.isEncrypted()) {
 				PDFTextStripper stripper = new PDFTextStripper();
@@ -175,7 +175,6 @@ public class EntityController {
 		}
 
 		return text;
-
 	}
 
 	private void exportToPDF(List<String> result, String fileName, String searchedName) {
