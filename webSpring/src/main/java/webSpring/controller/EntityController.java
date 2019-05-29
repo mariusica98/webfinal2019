@@ -50,7 +50,7 @@ public class EntityController {
 	@GetMapping("/")
 	public String greetingForm(Model model, HttpServletResponse response) {
 		model.addAttribute("pdfViewModel", new PdfViewModel());
- 
+
 		return "entity";
 	}
 
@@ -160,9 +160,10 @@ public class EntityController {
 		PDDocument document;
 
 		try {
-			File f = new File("/controller/entity.pdf");
-			System.out.println(" fisierul exista ? : --- "+ f.exists() );
-			System.out.println("FILE PATH IS:  "+f.getAbsolutePath());
+			File f = new File("entity.pdf");
+			System.out.println(" fisierul exista ? : --- " + f.exists());
+			System.out.println(" fisierul poate fi citit ? : --- " + f.canRead());
+			System.out.println("FILE PATH IS:  " + f.getAbsolutePath());
 			document = PDDocument.load(f);
 
 			if (!document.isEncrypted()) {
