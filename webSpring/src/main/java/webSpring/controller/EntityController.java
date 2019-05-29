@@ -160,7 +160,9 @@ public class EntityController {
 		PDDocument document;
 
 		try {
-			document = PDDocument.load(new File("entity.pdf"));
+			File f = new File("entity.pdf");
+			System.out.println("FILE PATH IS:  "+f.getPath());
+			document = PDDocument.load(f);
 
 			if (!document.isEncrypted()) {
 				PDFTextStripper stripper = new PDFTextStripper();
