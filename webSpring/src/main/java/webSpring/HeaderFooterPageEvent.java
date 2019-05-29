@@ -55,7 +55,7 @@ public class HeaderFooterPageEvent extends PdfPageEventHelper {
 			header.getDefaultCell().setBorderColor(BaseColor.LIGHT_GRAY);
 
 			// add image
-			Image logo = Image.getInstance("src/main/resources/static/images/atos.png");
+			Image logo = Image.getInstance("https://i.imgur.com/xfChJpW.png");
 			header.addCell(logo);
 
 			// add text-date
