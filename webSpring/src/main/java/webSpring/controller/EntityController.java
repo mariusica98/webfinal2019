@@ -10,7 +10,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -47,7 +50,7 @@ public class EntityController {
 	@GetMapping("/")
 	public String greetingForm(Model model, HttpServletResponse response) {
 		model.addAttribute("pdfViewModel", new PdfViewModel());
-
+ 
 		return "entity";
 	}
 
@@ -65,15 +68,13 @@ public class EntityController {
 			pdfViewModel.setResults(searchedText);
 			model.addAttribute("pdfViewModel", pdfViewModel);
 			model.addAttribute("SearchedWord", searchedWord);
-			
-			if(searchedText.isEmpty()) {
+
+			if (searchedText.isEmpty()) {
 				model.addAttribute("mesaj1", "No entity found");
-				
-					
-			}else
+
+			} else
 				model.addAttribute("mesaj1", "entity found");
-				
-			
+
 			exportToPDF(searchedText, "output/txt.pdf", searchedWord);
 			return "entity";
 
@@ -95,7 +96,21 @@ public class EntityController {
 
 		case "Download":
 			String text = this.getText();
-			pdfRepository.save(new PDF(text));
+
+			Iterable<PDF> pdfs = pdfRepository.findAll();
+			List<PDF> pdfList = new ArrayList<>();
+
+			for (PDF pdf : pdfs) {
+				pdfList.add(pdf);
+			}
+
+			if (pdfList.size() == 0) {
+				PDF pdf = new PDF();
+				pdf.setText(text);
+				pdfRepository.save(pdf);
+			}
+
+			model.addAttribute("mesaj2", "S-a realizat descarcarea");
 			return "entity";
 
 		default:
@@ -165,7 +180,6 @@ public class EntityController {
 
 	private void exportToPDF(List<String> result, String fileName, String searchedName) {
 		Document pdfDoc = new Document(PageSize.A4, 34, 34, 100, 90);
-		
 
 		Font cellFontBold = FontFactory.getFont("Times Roman", 8, BaseColor.BLACK);
 		cellFontBold.setStyle(Font.BOLD);
@@ -183,7 +197,6 @@ public class EntityController {
 			title.setSpacingBefore(60f);
 			title.setSpacingAfter(30f);
 			pdfDoc.add(title);
-			
 
 			if (!result.isEmpty()) {
 				PdfPTable table = new PdfPTable(1);
