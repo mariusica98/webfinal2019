@@ -72,7 +72,7 @@ public class EntityController {
 			} else
 				model.addAttribute("mesaj1", "entity found");
 
-			exportToPDF(searchedText, "output.pdf", searchedWord);
+			exportToPDF(searchedText, "Entity-Output.pdf", searchedWord);
 			return "entity";
 
 		case "Reset":
@@ -81,7 +81,7 @@ public class EntityController {
 		case "Export":
 			try {
 
-				downloadFile(response, "output.pdf");
+				downloadFile(response, "Entity-Output.pdf");
 
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -91,24 +91,24 @@ public class EntityController {
 		case "Person":
 			return "redirect:/person";
 
-		case "Download":
-			String text = this.getText();
-
-			Iterable<PDF> pdfs = pdfRepository.findAll();
-			List<PDF> pdfList = new ArrayList<>();
-
-			for (PDF pdf : pdfs) {
-				pdfList.add(pdf);
-			}
-
-			if (pdfList.size() == 0) {
-				PDF pdf = new PDF();
-				pdf.setText(text);
-				pdfRepository.save(pdf);
-			}
-
-			model.addAttribute("mesaj2", "S-a realizat descarcarea");
-			return "entity";
+//		case "Download":
+//			String text = this.getText();
+//
+//			Iterable<PDF> pdfs = pdfRepository.findAll();
+//			List<PDF> pdfList = new ArrayList<>();
+//
+//			for (PDF pdf : pdfs) {
+//				pdfList.add(pdf);
+//			}
+//
+//			if (pdfList.size() == 0) {
+//				PDF pdf = new PDF();
+//				pdf.setText(text);
+//				pdfRepository.save(pdf);
+//			}
+//
+//			model.addAttribute("mesaj2", "S-a realizat descarcarea");
+//			return "entity";
 
 		default:
 			return "entity";
@@ -151,29 +151,29 @@ public class EntityController {
 		return list;
 	}
 
-	private String getText() {
-
-		String text = "";
-		PDDocument document;
-
-		try {
-			document = PDDocument.load(new File("src/main/resources/static/pdf/entity.pdf"));
-
-			if (!document.isEncrypted()) {
-				PDFTextStripper stripper = new PDFTextStripper();
-				text = stripper.getText(document);
-				// System.out.println("Text:" + text);
-
-			}
-			document.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return text;
-
-	}
+//	private String getText() {
+//
+//		String text = "";
+//		PDDocument document;
+//
+//		try {
+//			document = PDDocument.load(new File("src/main/resources/static/pdf/entity.pdf"));
+//
+//			if (!document.isEncrypted()) {
+//				PDFTextStripper stripper = new PDFTextStripper();
+//				text = stripper.getText(document);
+//				// System.out.println("Text:" + text);
+//
+//			}
+//			document.close();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//		return text;
+//
+//	}
 
 	private void exportToPDF(List<String> result, String fileName, String searchedName) {
 		Document pdfDoc = new Document(PageSize.A4, 34, 34, 100, 90);
