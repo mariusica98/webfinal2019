@@ -13,10 +13,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -26,7 +24,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -90,7 +87,7 @@ public class PersonController {
 				}
 				personViewModelPerson.setMaliciousList(maliciousPersons);
 
-				exportToPDF(searchedPersons, maliciousPersons, "output.pdf", searchedName);
+				exportToPDF(searchedPersons, maliciousPersons, "output/txt.pdf", searchedName);
 			}
 			return "person";
 
@@ -105,7 +102,7 @@ public class PersonController {
 
 		case "Export":
 			try {
-				downloadFile(response, "output.pdf");
+				downloadFile(response, "output/txt.pdf");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

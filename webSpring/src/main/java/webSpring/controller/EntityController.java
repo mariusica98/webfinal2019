@@ -10,9 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +21,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -50,7 +47,7 @@ public class EntityController {
 	@GetMapping("/")
 	public String greetingForm(Model model, HttpServletResponse response) {
 		model.addAttribute("pdfViewModel", new PdfViewModel());
-
+ 
 		return "entity";
 	}
 
@@ -75,7 +72,7 @@ public class EntityController {
 			} else
 				model.addAttribute("mesaj1", "entity found");
 
-			exportToPDF(searchedText, "output.pdf", searchedWord);
+			exportToPDF(searchedText, "output/txt.pdf", searchedWord);
 			return "entity";
 
 		case "Reset":
@@ -84,7 +81,7 @@ public class EntityController {
 		case "Export":
 			try {
 
-				downloadFile(response, "output.pdf");
+				downloadFile(response, "output/txt.pdf");
 
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -160,12 +157,7 @@ public class EntityController {
 		PDDocument document;
 
 		try {
-			File f = new File("entity.txt");
-			System.out.println(" fisierul exista ? : --- " + f.exists());
-			System.out.println(" fisierul poate fi citit ? : --- " + f.canRead());
-			System.out.println("FILE PATH IS:  " + f.getAbsolutePath());
-			
-			document = PDDocument.load(f);
+			document = PDDocument.load(new File("src/main/resources/static/pdf/entity.pdf"));
 
 			if (!document.isEncrypted()) {
 				PDFTextStripper stripper = new PDFTextStripper();
@@ -175,13 +167,12 @@ public class EntityController {
 			}
 			document.close();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-			e.getMessage();
-			System.out.println();
-			e.getCause();
 		}
 
 		return text;
+
 	}
 
 	private void exportToPDF(List<String> result, String fileName, String searchedName) {
