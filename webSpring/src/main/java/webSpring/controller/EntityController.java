@@ -47,7 +47,7 @@ public class EntityController {
 	@GetMapping("/")
 	public String greetingForm(Model model, HttpServletResponse response) {
 		model.addAttribute("pdfViewModel", new PdfViewModel());
- 
+
 		return "entity";
 	}
 
@@ -60,7 +60,13 @@ public class EntityController {
 		switch (reqParam) {
 		case "Search":
 
-			searchedText = this.search(this.getTextFromDatabase(), searchedWord);
+			if (!searchedWord.isEmpty()) {
+				searchedWord = searchedWord.substring(0, 1).toUpperCase() + searchedWord.substring(1);
+				searchedText = this.search(this.getTextFromDatabase(), searchedWord);
+			} else {
+				return "entity";
+			}
+
 			pdfViewModel.setResult(searchedText.toString());
 			pdfViewModel.setResults(searchedText);
 			model.addAttribute("pdfViewModel", pdfViewModel);
@@ -119,16 +125,22 @@ public class EntityController {
 
 		List<String> entries = new ArrayList<>();
 		List<String> finalText = new ArrayList<>();
-		for (int i = 0; i < list2.size(); i++) {
-			if (list2.get(i).contains(cuvantcautat)) {
-				String entry = "";
 
-				for (int j = 0; j < 36; j++) {
-					finalText.add(list2.get(j + i));
-					entry = entry + " " + list2.get(j + i);
+		if (!cuvantcautat.isEmpty()) {
+
+			for (int i = 0; i < list2.size(); i++) {
+				if (list2.get(i).contains(cuvantcautat)) {
+					String entry = "";
+
+					for (int j = 0; j < 36; j++) {
+						finalText.add(list2.get(j + i));
+						entry = entry + " " + list2.get(j + i);
+					}
+					entries.add(entry);
 				}
-				entries.add(entry);
 			}
+		} else {
+			return null;
 		}
 		return entries;
 	}
