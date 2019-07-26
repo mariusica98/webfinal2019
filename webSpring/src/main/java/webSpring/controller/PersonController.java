@@ -13,17 +13,23 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -44,6 +50,7 @@ import webSpring.repository.MaliciousRepository;
 import webSpring.repository.PersonRepository;
 
 @Controller
+@Configuration
 public class PersonController {
 	@Autowired
 	private PersonRepository personRepository;
@@ -54,22 +61,30 @@ public class PersonController {
 	@Autowired
 	private ServletContext servletContext;
 
+	@Scheduled(fixedRate = 86400000)
+	private void doSome() {
+
+		loadToDatabase("https://www.bis.doc.gov/dpl/dpl.txt");
+		System.out.println("doSome");
+		getMapping();
+	}
+
 	@GetMapping("/person")
-	public String getMapping(Model model, HttpServletResponse response) {
-		model.addAttribute("personViewModelPerson", new PersonViewModelPerson());
-		return "person";
+	public ModelAndView getMapping() {
+		return new ModelAndView("person", "personViewModelPerson", new PersonViewModelPerson());
 	}
 
 	@PostMapping("/person")
 	public String postMapping(@ModelAttribute PersonViewModelPerson personViewModelPerson,
 			@RequestParam("submit") String reqParam, HttpServletResponse response, Model model) {
+		System.out.println("POST");
 		List<Person> searchedPersons = new ArrayList<>();
 		List<Malicious> maliciousPersons = new ArrayList<>();
 
 		switch (reqParam) {
-		case "Search":
+		case "Cautare":
 			String searchedName = personViewModelPerson.getName().trim();
-
+			// verificare1
 			if (!searchedName.equals("")) {
 				Iterable<Person> persons = personRepository.findAll();
 				for (Person person : persons) {
@@ -78,6 +93,11 @@ public class PersonController {
 					}
 				}
 				personViewModelPerson.setSearchedList(searchedPersons);
+
+				if (searchedPersons.isEmpty()) {
+					exportToPDF1(searchedName, "Person-Output1.pdf");
+
+				}
 
 				Iterable<Malicious> malicious = maliciousRepository.findAll();
 				for (Malicious person : malicious) {
@@ -89,18 +109,19 @@ public class PersonController {
 
 				exportToPDF(searchedPersons, maliciousPersons, "Person-Output.pdf", searchedName);
 			}
+
 			return "person";
 
-		case "Download":
-			loadToDatabase("https://www.bis.doc.gov/dpl/dpl.txt");
-			model.addAttribute("mesaj", "S-a realizat descarcarea");
-			return "person";
+		/*
+		 * case "Download": loadToDatabase("https://www.bis.doc.gov/dpl/dpl.txt");
+		 * model.addAttribute("mesaj", "S-a realizat descarcarea"); return "person";
+		 */
 
-		case "Reset":
+		case "Resetati cautarea":
 			personViewModelPerson.setName("");
 			return "person";
 
-		case "Export":
+		case "Export PDF":
 			try {
 				downloadFile(response, "Person-Output.pdf");
 			} catch (IOException e) {
@@ -108,12 +129,50 @@ public class PersonController {
 			}
 			return "person";
 
-		case "Entity":
+		// case de export 1
+		case "Export PDF2":
+			try {
+				downloadFile(response, "Person-Output1.pdf");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return "person";
+
+		case "Spre pagina Entity":
 			return "redirect:/";
 
 		default:
 			return "person";
 		}
+	}
+
+	// functie in cazul in care nu gaseste pe cineva
+	private void exportToPDF1(String searchedName, String fileName) {
+
+		Document pdfDoc1 = new Document(PageSize.A4, 35, 35, 100, 90);
+		Font cellFontBold = FontFactory.getFont("Times Roman", 8, BaseColor.BLACK);
+		cellFontBold.setStyle(Font.BOLD);
+
+		Font textFont = FontFactory.getFont("Times Roman", 14, BaseColor.BLACK);
+		textFont.setStyle(Font.BOLD);
+
+		try {
+
+			HeaderFooterPageEvent event = new HeaderFooterPageEvent();
+			PdfWriter.getInstance(pdfDoc1, new FileOutputStream(fileName)).setPageEvent(event);
+			pdfDoc1.open();
+			Paragraph title = new Paragraph(
+					"Nicio informatie despre: " + searchedName + " in: https://www.bis.doc.gov/dpl/dpl.txt ", textFont);
+			title.setSpacingBefore(60f);
+			title.setSpacingAfter(30f);
+			pdfDoc1.add(title);
+
+		} catch (FileNotFoundException | DocumentException e) {
+			e.printStackTrace();
+		} finally {
+			pdfDoc1.close();
+		}
+
 	}
 
 	private void exportToPDF(List<Person> searchedPersons, List<Malicious> maliciousPersons, String fileName,
@@ -126,13 +185,13 @@ public class PersonController {
 		Font cellFont = FontFactory.getFont("Times Roman", 8, BaseColor.BLACK);
 		Font textFont = FontFactory.getFont("Times Roman", 14, BaseColor.BLACK);
 		textFont.setStyle(Font.BOLD);
-    
+
 		try {
 			HeaderFooterPageEvent event = new HeaderFooterPageEvent();
 			PdfWriter.getInstance(pdfDoc, new FileOutputStream(fileName)).setPageEvent(event);
 			pdfDoc.open();
 
-			Paragraph title = new Paragraph("Information about: " + searchedName, textFont);
+			Paragraph title = new Paragraph("Informatii despre: " + searchedName, textFont);
 			title.setSpacingBefore(60f);
 			title.setSpacingAfter(30f);
 			pdfDoc.add(title);
@@ -203,13 +262,20 @@ public class PersonController {
 		return cell;
 	}
 
-	private void loadToDatabase(String linkForDenied) {
+	private void deleteDatabase() {
+
+		personRepository.deleteAll();
+		maliciousRepository.deleteAll();
+	}
+
+	void loadToDatabase(String linkForDenied) {
 		URL deniedPersonListURL;
 		BufferedReader in = null;
 		URLConnection yc;
-		personRepository.deleteAll();
-		maliciousRepository.deleteAll();
 
+	if(	personRepository.count() != 0 )
+		deleteDatabase();
+		
 		try {
 			deniedPersonListURL = new URL(linkForDenied);
 			yc = deniedPersonListURL.openConnection();

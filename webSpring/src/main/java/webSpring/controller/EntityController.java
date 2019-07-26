@@ -58,7 +58,7 @@ public class EntityController {
 		List<String> searchedText;
 
 		switch (reqParam) {
-		case "Search":
+		case "Cautare":
 
 			if (!searchedWord.isEmpty()) {
 				searchedWord = searchedWord.substring(0, 1).toUpperCase() + searchedWord.substring(1);
@@ -66,7 +66,7 @@ public class EntityController {
 			} else {
 				return "entity";
 			}
-
+				
 			pdfViewModel.setResult(searchedText.toString());
 			pdfViewModel.setResults(searchedText);
 			model.addAttribute("pdfViewModel", pdfViewModel);
@@ -74,17 +74,17 @@ public class EntityController {
 
 			if (searchedText.isEmpty()) {
 				model.addAttribute("mesaj1", "No entity found");
-
+				exportToPDF2(searchedWord, "Entity-Output11.pdf");
 			} else
 				model.addAttribute("mesaj1", "entity found");
 
 			exportToPDF(searchedText, "Entity-Output.pdf", searchedWord);
 			return "entity";
 
-		case "Reset":
+		case "Resetati cautarea":
 			return "entity";
 
-		case "Export":
+		case "Export PDF":
 			try {
 
 				downloadFile(response, "Entity-Output.pdf");
@@ -93,8 +93,16 @@ public class EntityController {
 				e.printStackTrace();
 			}
 			return "entity";
+			
+		case "Export PDF2":
+			try {
+				downloadFile(response, "Entity-Output11.pdf");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return "person";
 
-		case "Person":
+		case "Spre pagina Person":
 			return "redirect:/person";
 
 //		case "Download":
@@ -186,6 +194,36 @@ public class EntityController {
 //		return text;
 //
 //	}
+	
+	//functie cand nu gaseste entitate
+	private void exportToPDF2(String searchedWord, String fileName) {
+
+		Document pdfDoc1 = new Document(PageSize.A4, 35, 35, 100, 90);
+		Font cellFontBold = FontFactory.getFont("Times Roman", 8, BaseColor.BLACK);
+		cellFontBold.setStyle(Font.BOLD);
+
+		Font textFont = FontFactory.getFont("Times Roman", 14, BaseColor.BLACK);
+		textFont.setStyle(Font.BOLD);
+
+		try {
+
+			HeaderFooterPageEvent event = new HeaderFooterPageEvent();
+			PdfWriter.getInstance(pdfDoc1, new FileOutputStream(fileName)).setPageEvent(event);
+			pdfDoc1.open();
+			Paragraph title = new Paragraph(
+					"Nicio informatie despre: " + searchedWord + "in entity.pdf ", textFont);
+			title.setSpacingBefore(60f);
+			title.setSpacingAfter(30f);
+			pdfDoc1.add(title);
+
+		} catch (FileNotFoundException | DocumentException e) {
+			e.printStackTrace();
+		} finally {
+			pdfDoc1.close();
+		}
+
+	}
+	
 
 	private void exportToPDF(List<String> result, String fileName, String searchedName) {
 		Document pdfDoc = new Document(PageSize.A4, 34, 34, 100, 90);
@@ -202,7 +240,7 @@ public class EntityController {
 			PdfWriter.getInstance(pdfDoc, new FileOutputStream(fileName)).setPageEvent(event);
 			pdfDoc.open();
 
-			Paragraph title = new Paragraph("Information about: " + searchedName, textFont);
+			Paragraph title = new Paragraph("Informatii despre: " + searchedName, textFont);
 			title.setSpacingBefore(60f);
 			title.setSpacingAfter(30f);
 			pdfDoc.add(title);

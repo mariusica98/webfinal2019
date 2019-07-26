@@ -16,29 +16,32 @@
 		<br>
 		<div>
 			<div>
-				<b><label for="personName" >Insert Entity Name:</label></b> <input
-					type="text" name="searchedWord" />
+				<b><label for="personName" >Introduce-ti entitatea cautata: </label></b> <input
+					type="text" autocomplete="off" name="searchedWord" />
 			</div>
 			<br>
 			<p>
 				<input class="btn btn-primary" name="submit" type="submit"
-					value="Search" oninput="saveWord(this.value)" /> <input
-					class="btn btn-primary" name="submit" type="submit" value="Reset" />
+					value="Cautare" oninput="saveWord(this.value)" /> <input
+					class="btn btn-primary" name="submit" type="submit" value="Resetati cautarea" />
 				<!-- 				<input class = "btn btn-primary" name="submit" type="submit" value="Export" /> -->
 				<input class="btn btn-primary" name="submit" type="submit"
-					value="Person" />
+					value="Spre pagina Person" />
 			</p>
 		</div>
 
 		<div th:if="${mesaj1 == 'No entity found' }">
-			<p>No information found on: entity.pdf</p>
+			<h5 th:text="'Nicio informatie despre: ' + ${SearchedWord} + ' in entity.pdf'"></h5>
+		<input class="btn btn-primary" name="submit" type="submit"
+					value="Export PDF2" />
+					
 		</div>
 		<div th:if="${mesaj1 == 'entity found' }">
 			<div>
-				<h5 th:text="'Information about : ' + ${SearchedWord}"></h5>
+				<h5 th:text="'Informatie despre: ' + ${SearchedWord}"></h5>
 				<table class="table" border="2">
 					<tr>
-						<th class="tb" scope="col">ENTITY</th>
+						<th class="text-center" scope="col">ENTITY</th>
 					</tr>
 					<tr th:each="result : *{results}">
 						<td>
@@ -47,7 +50,7 @@
 					</tr>
 				</table>
 				<input class="btn btn-primary" name="submit" type="submit"
-					value="Export" />
+					value="Export PDF" />
 			</div>
 		</div>
 	</form>

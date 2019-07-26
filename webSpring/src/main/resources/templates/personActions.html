@@ -9,41 +9,41 @@
 	<form th:object="${personViewModelPerson}" action="insert.html"
 		th:action="@{/person}" method="post">
 		<div>
-			<input class="btn btn-primary" name="submit" type="submit"
-				value="Download" />
-
+	
 		</div>
 		<br>
 		<div>
 			<div>
-				<b> <label>Insert Person Name:</label></b> <input type="text"
-					th:field="*{name}" />
+				<b> <label>Introduceti numele persoanei cautate:</label></b> <input type="text"
+					autocomplete="off" th:field="*{name}" />
 			</div>
 			<br>
 			<p>
 				<input class="btn btn-primary" name="submit" type="submit"
-					value="Search" /> <input class="btn btn-primary" name="submit"
-					type="submit" value="Reset" /> <input class="btn btn-primary"
-					name="submit" type="submit" value="Entity" />
+					value="Cautare" /> <input class="btn btn-primary" name="submit"
+					type="submit" value="Resetati cautarea" /> <input class="btn btn-primary"
+					name="submit" type="submit" value="Spre pagina Entity" />
 			</p>
 		</div>
-
+		
+		
 		<div th:if="${not personViewModelPerson.isListEmpty()}">
+			<h5 th:text="'Informatii despre: ' + *{name}"></h5>
 			<table class="table table-hover" border="3">
 				<thead class="thead-dark">
 					<tr>
-						<th scope="col">NAME</th>
-						<th scope="col">STREET_ADDRESS</th>
-						<th scope="col">CITY</th>
-						<th scope="col">STATE</th>
-						<th scope="col">COUNTRY</th>
-						<th scope="col">POSTAL_CODE</th>
-						<th scope="col">EFFECTIVE_DATE</th>
-						<th scope="col">EXPIRATION_DATE</th>
-						<th scope="col">STANDARD_ORDER</th>
-						<th scope="col">LAST_UPDATE</th>
-						<th scope="col">ACTION</th>
-						<th scope="col">FR_CITATION</th>
+						<th class="text-center" scope="col">NAME</th>
+						<th class="text-center" scope="col">STREET ADDRESS</th>
+						<th class="text-center" scope="col">CITY</th>
+						<th class="text-center" scope="col">STATE</th>
+						<th class="text-center" scope="col">COUNTRY</th>
+						<th class="text-center" scope="col">POSTAL CODE</th>
+						<th class="text-center" scope="col">EFFECTIVE DATE</th>
+						<th class="text-center" scope="col">EXPIRATION DATE</th>
+						<th class="text-center" scope="col">STANDARD ORDER</th>
+						<th class="text-center" scope="col">LAST UPDATE</th>
+						<th class="text-center" scope="col">ACTION</th>
+						<th class="text-center" scope="col">FR CITATION</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -67,7 +67,8 @@
 
 		<div th:if="${not personViewModelPerson.isMaliciousEmpty()}">
 			<p>
-				<b>This search offer also some unformatted information</b>
+				<b>Aceasta cautare ofera si informatii despre: </b>
+				
 			</p>
 
 			<table border="3">
@@ -79,7 +80,12 @@
 
 		<div
 			th:if="${personViewModelPerson.isListEmpty()} and ${personViewModelPerson.isMaliciousEmpty()} and ${not personViewModelPerson.isNameEmpty()}">
-			<p>No information found on: https://www.bis.doc.gov/dpl/dpl.txt</p>
+			<h5 th:text="'Nicio informatie despre: ' + *{name} + ' in: https://www.bis.doc.gov/dpl/dpl.txt'"></h5>
+			<p>
+				 <input class="btn btn-primary" name="submit" type="submit"
+					value="Export PDF2" th:action="@{/download1}" />
+			</p>
+
 		</div>
 
 		<label th:text="${mesaj}"></label>
@@ -88,9 +94,11 @@
 			th:if="${not personViewModelPerson.isListEmpty()} or ${not personViewModelPerson.isMaliciousEmpty()}">
 			<p>
 				<br> <input class="btn btn-primary" name="submit" type="submit"
-					value="Export" th:action="@{/download1}" />
+					value="Export PDF" th:action="@{/download1}" />
 			</p>
 		</div>
+
+
 	</form>
 </body>
 <th:block th:include="layout/bootstrapIncludes.html"></th:block>
